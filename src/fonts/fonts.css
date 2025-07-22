@@ -3,8 +3,8 @@
 :root {
   --font-heading: 'Montserrat', sans-serif;
   --font-body: 'Roboto', sans-serif;
-  --font-ui: 'Nunito', sans-serif;
-  --font-heading-alt: 'Poppins', sans-serif;
-  --font-body-alt: 'Open Sans', sans-serif;
-  --font-ui-alt: 'Quicksand', sans-serif;
+  --font-ui: 'Roboto', sans-serif;
+  --font-heading-alt: 'Montserrat', sans-serif;
+  --font-body-alt: 'Roboto', sans-serif;
+  --font-ui-alt: 'Roboto', sans-serif;
 }
