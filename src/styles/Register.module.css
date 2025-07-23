@@ -36,7 +36,6 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-weight: bold;
 }
 
 button:hover {
@@ -51,7 +50,6 @@ p {
 p a {
   color: #388e3c;
   text-decoration: none;
-  font-weight: 500;
 }
 
 p a:hover {
