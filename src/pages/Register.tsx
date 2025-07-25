@@ -21,8 +21,12 @@ const Register: React.FC = () => {
     try {
       await registerUser(email, password, username);
       navigate('/login');
-    } catch (err: any) {
-      setError(err.message || 'Error al crear cuenta');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('Error al crear cuenta');
+      }
     } finally {
       setLoading(false);
     }

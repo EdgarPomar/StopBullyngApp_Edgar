@@ -8,3 +8,4 @@ Librerías utilizadas:
 	- google fonts para la tipografía
 
 Base de datos utilizado: appwrite
+Para test unitarios: jest
