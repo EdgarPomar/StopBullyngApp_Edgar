@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from '../styles/Login.module.css';
 import typography from '../styles/Typography.module.css';
-import { loginUser } from '../services/userService';
+import { loginUser, getCurrentUser } from '../services/userService';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -17,6 +17,11 @@ const Login: React.FC = () => {
 
     try {
       await loginUser(email, password);
+
+      // ✅ Obtener el usuario actual y mostrar en consola
+      const user = await getCurrentUser();
+      console.log('🔐 Sesión iniciada como:', user);
+
       navigate('/'); // redirige al inicio tras login
     } catch (err: unknown) {
       if (err instanceof Error) {

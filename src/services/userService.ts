@@ -15,7 +15,7 @@ export const registerUser = (
  * Inicia sesión del usuario con email y contraseña
  */
 export const loginUser = (email: string, password: string) => {
-  return account.createSession(email, password);
+  return account.createEmailPasswordSession(email, password);
 };
 
 /**
