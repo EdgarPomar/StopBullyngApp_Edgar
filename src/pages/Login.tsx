@@ -3,9 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from '../styles/Login.module.css';
 import typography from '../styles/Typography.module.css';
 import { loginUser, getCurrentUser } from '../services/userService';
+import { useAuth } from '../hooks/useAuth';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
+  const { setUser } = useAuth(); // 👈 Usamos el context para actualizar el usuario
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,12 +19,9 @@ const Login: React.FC = () => {
 
     try {
       await loginUser(email, password);
-
-      // ✅ Obtener el usuario actual y mostrar en consola
-      const user = await getCurrentUser();
-      console.log('🔐 Sesión iniciada como:', user);
-
-      navigate('/'); // redirige al inicio tras login
+      const currentUser = await getCurrentUser(); // 👈 obtenemos los datos del usuario
+      setUser(currentUser); // 👈 actualizamos el context
+      navigate('/');
     } catch (err: unknown) {
       if (err instanceof Error) {
         setError(err.message);

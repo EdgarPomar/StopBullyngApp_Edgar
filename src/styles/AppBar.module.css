@@ -38,7 +38,11 @@
 .avatarContainer {
   position: relative;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px; /* 👈 separa el texto del avatar mejor */
 }
+
 
 .avatar {
   height: 35px;
@@ -70,3 +74,29 @@
 .dropdownMenu a:hover {
   background-color: #f5f5f5;
 }
+
+.userName {
+  margin-right: 12px;              /* Espaciado entre texto y avatar */
+  font-weight: 600;                /* Más presencia */
+  font-size: 1rem;
+  color: white;
+  font-family: 'Poppins', sans-serif;  /* Usa tu fuente personalizada */
+  display: flex;
+  align-items: center;
+}
+
+
+.logoutBtn {
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.logoutBtn:hover {
+  background-color: #f5f5f5;
+}
+
