@@ -5,24 +5,24 @@ import Footer from './components/Footer';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import { useAuth } from './hooks/useAuth';
 
 const App: React.FC = () => {
+  const { user } = useAuth();
+
   return (
     <Router>
-      {/* AppBar fijo arriba */}
       <AppBar />
-
       <main style={{ marginTop: '60px', marginBottom: '50px', padding: '20px' }}>
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {/* Redirigir cualquier ruta desconocida a la landing */}
+          {user?.labels?.includes('admin') && <Route path="/dashboard" element={<Dashboard />} />}
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>
-
-      {/* Footer fijo abajo */}
       <Footer />
     </Router>
   );

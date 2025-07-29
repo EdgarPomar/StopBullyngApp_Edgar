@@ -1,4 +1,6 @@
+// services/userService.ts
 import { account, ID } from '../lib/appwrite';
+import { User } from '../context/AuthContext';
 
 /**
  * Registra un nuevo usuario con email, contraseña y nombre
@@ -21,8 +23,17 @@ export const loginUser = (email: string, password: string) => {
 /**
  * Obtiene los datos del usuario autenticado actualmente
  */
-export const getCurrentUser = () => {
-  return account.get();
+export const getCurrentUser = async (): Promise<User> => {
+  const res = await account.get();
+
+  console.log('Respuesta cruda desde Appwrite:', res);
+
+  return {
+    $id: res.$id,
+    name: res.name,
+    email: res.email,
+    labels: res.labels ?? [],
+  };
 };
 
 /**

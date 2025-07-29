@@ -1,3 +1,4 @@
+// /frontend/src/appwrite.ts
 import { Client, Account, Databases, Query, ID } from 'appwrite';
 
 const client = new Client();

@@ -31,7 +31,7 @@ const AppBar: React.FC = () => {
             ) : (
               <>
                 <a href="#">Perfil</a>
-                <a href="#">Dashboard</a>
+                <Link to="/dashboard">Dashboard</Link>
                 <button onClick={logout} className={styles.logoutBtn}>Logout</button>
               </>
             )}
