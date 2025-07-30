@@ -26,15 +26,16 @@ export const loginUser = (email: string, password: string) => {
 export const getCurrentUser = async (): Promise<User> => {
   const res = await account.get();
 
-  console.log('Respuesta cruda desde Appwrite:', res);
-
-  return {
+  const user: User = {
     $id: res.$id,
     name: res.name,
     email: res.email,
-    labels: res.labels ?? [],
+    labels: Array.isArray(res.labels) ? res.labels : [],
   };
+
+  return user;
 };
+
 
 /**
  * Cierra la sesión actual del usuario

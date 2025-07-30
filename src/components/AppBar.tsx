@@ -16,9 +16,7 @@ const AppBar: React.FC = () => {
       </div>
 
       <div className={styles.avatarContainer} onClick={toggleMenu}>
-        {/* ✅ Mostrar nombre si hay sesión */}
         {user && <span className={styles.userName}>{user.name}</span>}
-
         <img src="/avatar.png" alt="User Avatar" className={styles.avatar} />
 
         {menuOpen && (
@@ -31,8 +29,12 @@ const AppBar: React.FC = () => {
             ) : (
               <>
                 <a href="#">Perfil</a>
-                <Link to="/dashboard">Dashboard</Link>
-                <button onClick={logout} className={styles.logoutBtn}>Logout</button>
+                {user.labels?.includes('admin') && (
+                  <Link to="/dashboard">Dashboard</Link>
+                )}
+                <button onClick={logout} className={styles.logoutBtn}>
+                  Logout
+                </button>
               </>
             )}
           </div>

@@ -19,7 +19,16 @@ const App: React.FC = () => {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          {user?.labels?.includes('admin') && <Route path="/dashboard" element={<Dashboard />} />}
+          <Route
+            path="/dashboard"
+            element={
+              user?.labels?.includes('admin') ? (
+                <Dashboard />
+              ) : (
+                <Navigate to="/login" replace />
+              )
+            }
+          />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>
@@ -27,5 +36,6 @@ const App: React.FC = () => {
     </Router>
   );
 };
+
 
 export default App;

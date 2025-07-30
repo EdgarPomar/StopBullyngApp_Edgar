@@ -10,7 +10,8 @@ type Usuario = {
   $id: string;
   name: string;
   email: string;
-  role: string;
+  role?: string;
+  labels?: string[];
 };
 
 const Dashboard: React.FC = () => {
@@ -25,14 +26,14 @@ const Dashboard: React.FC = () => {
         const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
         setUsuarios(response.documents as unknown as Usuario[]);
       } catch (err) {
-        setError('Error al obtener los usuarios');
         console.error(err);
+        setError('Error al obtener los usuarios');
       } finally {
         setLoading(false);
       }
     };
 
-    if (user && user.role === 'admin') {
+    if (user?.labels?.includes('admin')) {
       fetchUsuarios();
     } else {
       setLoading(false);
@@ -40,7 +41,7 @@ const Dashboard: React.FC = () => {
   }, [user]);
 
   if (!user) return <p>No autorizado. Inicia sesión.</p>;
-  if (user.role !== 'admin') return <p>No tienes permiso para acceder al dashboard.</p>;
+  if (!user.labels?.includes('admin')) return <p>No tienes permiso para acceder al dashboard.</p>;
 
   return (
     <div className={styles.container}>
@@ -63,7 +64,7 @@ const Dashboard: React.FC = () => {
               <tr key={u.$id}>
                 <td>{u.name}</td>
                 <td>{u.email}</td>
-                <td>{u.role}</td>
+                <td>{u.role || 'N/A'}</td>
               </tr>
             ))}
           </tbody>

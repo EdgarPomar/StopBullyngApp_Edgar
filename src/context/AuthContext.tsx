@@ -1,11 +1,10 @@
-// context/AuthContext.ts
 import { createContext } from 'react';
 
 export type User = {
   $id: string;
   name: string;
   email: string;
-  role?: 'admin' | 'user'; // Opcional, más específico
+  role?: 'admin' | 'user';
   labels?: string[];
 };
 
