@@ -5,7 +5,8 @@ import styles from '../styles/Dashboard.module.css';
 
 const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 const COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID_USERS;
-
+console.log('Base de datos Id: ', DATABASE_ID);
+console.log('Colección Id', COLLECTION_ID);
 type Usuario = {
   $id: string;
   name: string;

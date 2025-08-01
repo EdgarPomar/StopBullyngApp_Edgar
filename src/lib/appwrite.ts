@@ -1,13 +1,10 @@
-// /frontend/src/appwrite.ts
-import { Client, Account, Databases, Query, ID } from 'appwrite';
+import { Client, Account, Databases, ID, Query } from 'appwrite';
 
-const client = new Client();
-
-client
+const client = new Client()
   .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
   .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID);
 
 const account = new Account(client);
 const databases = new Databases(client);
 
-export { client, account, databases, Query, ID };
+export { client, account, databases, ID, Query };
