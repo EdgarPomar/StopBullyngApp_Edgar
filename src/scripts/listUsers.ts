@@ -1,23 +1,23 @@
-import { Client, Account } from 'appwrite';
+// scripts/listUsers.ts
+import { Client, Users } from 'node-appwrite';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const client = new Client()
-  .setEndpoint(process.env.VITE_APPWRITE_ENDPOINT!)  // tu endpoint
-  .setProject(process.env.VITE_APPWRITE_PROJECT_ID!);  // tu proyecto
+  .setEndpoint(process.env.VITE_APPWRITE_ENDPOINT!)
+  .setProject(process.env.VITE_APPWRITE_PROJECT_ID!)
+  .setKey(process.env.VITE_APPWRITE_API_KEY!);
 
-// Ya no se usa setKey en Client directamente
+const users = new Users(client);
 
-const account = new Account(client);
-
-async function getAccount() {
+async function listAllUsers() {
   try {
-    const res = await account.get();
-    console.log('Usuario autenticado:', res);
-  } catch (err) {
-    console.error('Error al obtener usuario:', err);
+    const res = await users.list();
+    console.log('Usuarios:', res.users);
+  } catch (error) {
+    console.error('❌ Error al listar usuarios:', error);
   }
 }
 
-getAccount();
+listAllUsers();

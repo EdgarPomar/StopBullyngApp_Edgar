@@ -25,6 +25,7 @@ const Dashboard: React.FC = () => {
     const fetchUsuarios = async () => {
       try {
         const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
+        console.log(response);
         setUsuarios(response.documents as unknown as Usuario[]);
       } catch (err) {
         console.error(err);
