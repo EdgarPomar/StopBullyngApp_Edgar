@@ -2,18 +2,12 @@ import React, { useEffect, useState, useContext } from 'react';
 import { databases } from '../lib/appwrite';
 import { AuthContext } from '../context/AuthContext';
 import styles from '../styles/Dashboard.module.css';
+import { Usuario } from '../types/userType';
 
 const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
 const COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID_USERS;
 console.log('Base de datos Id: ', DATABASE_ID);
 console.log('Colección Id', COLLECTION_ID);
-type Usuario = {
-  $id: string;
-  name: string;
-  email: string;
-  role?: string;
-  labels?: string[];
-};
 
 const Dashboard: React.FC = () => {
   const { user } = useContext(AuthContext);
@@ -24,9 +18,9 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
-        const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
-        console.log(response);
+        const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);        
         setUsuarios(response.documents as unknown as Usuario[]);
+        console.log(response.documents);
       } catch (err) {
         console.error(err);
         setError('Error al obtener los usuarios');
