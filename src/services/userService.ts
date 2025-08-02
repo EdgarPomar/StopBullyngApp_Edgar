@@ -9,8 +9,13 @@ export const registerUser = async (
   password: string,
   name: string
 ) => {
+  // 1. Crear usuario en Auth
   const user = await account.create(ID.unique(), email, password, name);
 
+  // 2. Iniciar sesión (necesaria para que pueda crear el documento con su sesión)
+  await account.createEmailPasswordSession(email, password);
+
+  // 3. Crear documento en 'profiles' con permisos por defecto
   await databases.createDocument(DATABASE_ID, COLLECTION_ID, ID.unique(), {
     userId: user.$id,
     name: user.name,
@@ -20,6 +25,8 @@ export const registerUser = async (
 
   return user;
 };
+
+
 
 export const loginUser = (email: string, password: string) => {
   return account.createEmailPasswordSession(email, password);

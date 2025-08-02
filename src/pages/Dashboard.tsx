@@ -4,10 +4,8 @@ import { AuthContext } from '../context/AuthContext';
 import styles from '../styles/Dashboard.module.css';
 import { Usuario } from '../types/userType';
 
-const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
-const COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID_USERS;
-console.log('Base de datos Id: ', DATABASE_ID);
-console.log('Colección Id', COLLECTION_ID);
+const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID!;
+const COLLECTION_ID = import.meta.env.VITE_APPWRITE_COLLECTION_ID_USERS!;
 
 const Dashboard: React.FC = () => {
   const { user } = useContext(AuthContext);
@@ -18,18 +16,18 @@ const Dashboard: React.FC = () => {
   useEffect(() => {
     const fetchUsuarios = async () => {
       try {
-        const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);        
+        const response = await databases.listDocuments(DATABASE_ID, COLLECTION_ID);
         setUsuarios(response.documents as unknown as Usuario[]);
-        console.log(response.documents);
+        console.log('[✔] Usuarios cargados:', response.documents);
       } catch (err) {
-        console.error(err);
+        console.error('[❌] Error al obtener los usuarios:', err);
         setError('Error al obtener los usuarios');
       } finally {
         setLoading(false);
       }
     };
 
-    if (user?.labels?.includes('admin')) {
+    if (user?.role === 'admin' || user?.labels?.includes('admin')) {
       fetchUsuarios();
     } else {
       setLoading(false);
@@ -37,7 +35,9 @@ const Dashboard: React.FC = () => {
   }, [user]);
 
   if (!user) return <p>No autorizado. Inicia sesión.</p>;
-  if (!user.labels?.includes('admin')) return <p>No tienes permiso para acceder al dashboard.</p>;
+  if (!(user.role === 'admin' || user.labels?.includes('admin'))) {
+    return <p>No tienes permiso para acceder al dashboard.</p>;
+  }
 
   return (
     <div className={styles.container}>
@@ -46,7 +46,7 @@ const Dashboard: React.FC = () => {
       {loading && <p>Cargando usuarios...</p>}
       {error && <p className={styles.error}>{error}</p>}
 
-      {!loading && usuarios.length > 0 && (
+      {!loading && usuarios.length > 0 ? (
         <table className={styles.table}>
           <thead>
             <tr>
@@ -65,6 +65,8 @@ const Dashboard: React.FC = () => {
             ))}
           </tbody>
         </table>
+      ) : (
+        !loading && <p>No hay usuarios para mostrar.</p>
       )}
     </div>
   );
