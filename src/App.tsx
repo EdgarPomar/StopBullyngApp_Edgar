@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import { useAuth } from './hooks/useAuth';
+import GameViewport from './pages/GameViewport';
 
 const App: React.FC = () => {
   const { user } = useAuth();
@@ -19,6 +20,7 @@ const App: React.FC = () => {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/Game" element={<GameViewport />} />
           <Route
             path="/dashboard"
             element={
