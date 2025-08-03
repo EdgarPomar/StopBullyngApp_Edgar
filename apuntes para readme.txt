@@ -12,3 +12,4 @@ Base de datos utilizado: appwrite
 Para test unitarios: jest
 Web del juego: fichero GameViewport.tsx y css GameViewport.module.css
 Juego : fichero Game.tsx (contendrá una clase en que almacenará las estructuras y la lógica)
+

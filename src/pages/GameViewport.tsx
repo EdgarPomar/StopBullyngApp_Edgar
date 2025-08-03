@@ -8,9 +8,8 @@ const GameViewport: React.FC = () => {
     if (iniciado.current) return; // ya fue iniciado, salimos
     iniciado.current = true;
     
-    const guardian:GuardianesGame = new GuardianesGame();    
-    guardian.InitGPU();
-    
+    const guardian:GuardianesGame = new GuardianesGame();        
+    guardian.Initialize(window.outerWidth, window.outerHeight);            
   }, []);
 
   return (
