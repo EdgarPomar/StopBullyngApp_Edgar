@@ -58,12 +58,13 @@ const Dashboard: React.FC = () => {
           <tbody>
             {usuarios.map((u) => (
               <tr key={u.$id}>
-                <td>{u.name}</td>
-                <td>{u.email}</td>
-                <td>{u.role || 'N/A'}</td>
+                <td data-label="Nombre">{u.name}</td>
+                <td data-label="Email" className={styles.email}>{u.email}</td>
+                <td data-label="Rol">{u.role || 'N/A'}</td>
               </tr>
             ))}
           </tbody>
+
         </table>
       ) : (
         !loading && <p>No hay usuarios para mostrar.</p>
