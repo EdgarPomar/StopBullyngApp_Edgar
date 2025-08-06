@@ -34,45 +34,47 @@ const Login: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={typography.title}>Iniciar Sesión</h2>
+      <div className={styles.formWrapper}>
+        <h2 className={typography.title}>Iniciar Sesión</h2>
 
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <label className={typography.body}>
-          Correo electrónico:
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <label className={typography.body}>
+            Correo electrónico:
+            <input
+              type="email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </label>
 
-        <label className={typography.body}>
-          Contraseña:
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
+          <label className={typography.body}>
+            Contraseña:
+            <input
+              type="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </label>
 
-        <button type="submit" className={typography.buttonText}>
-          Entrar
-        </button>
-      </form>
+          <button type="submit" className={typography.buttonText}>
+            Entrar
+          </button>
+        </form>
 
-      {error && (
-        <p className={typography.body} style={{ color: 'red', marginTop: '1rem' }}>
-          {error}
+        {error && (
+          <p className={typography.body} style={{ color: 'red', marginTop: '1rem' }}>
+            {error}
+          </p>
+        )}
+
+        <p className={typography.body}>
+          ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
         </p>
-      )}
-
-      <p className={typography.body}>
-        ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
-      </p>
+      </div>
     </div>
   );
 };

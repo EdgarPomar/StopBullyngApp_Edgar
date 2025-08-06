@@ -1,48 +1,78 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f5f5;
+}
+
 .container {
-  max-width: 400px;
-  margin: 100px auto;
+  min-height: calc(100vh - 120px); /* Resta altura del AppBar y Footer aprox */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 2rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.formWrapper {
+  width: 100%;
+  max-width: 480px;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
   text-align: center;
   margin-bottom: 1.5rem;
   color: #1976d2;
+  font-size: 1.8rem;
 }
 
 .form label {
   display: block;
   margin-bottom: 1rem;
+  font-weight: 500;
   color: #333;
 }
 
 .form input {
   width: 100%;
-  padding: 0.5rem;
-  margin-top: 0.3rem;
+  padding: 0.6rem;
+  margin-top: 0.4rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
 button {
   width: 100%;
-  padding: 0.7rem;
-  background-color: #1976d2;
+  padding: 0.75rem;
+  background-color: #388e3c;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
+  font-size: 1rem;
   cursor: pointer;
+  margin-top: 1rem;
 }
 
 button:hover {
-  background-color: #155fa0;
+  background-color: #2e7d32;
 }
 
 p {
   text-align: center;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+}
+
+/* Responsive para pantallas más pequeñas */
+@media (max-width: 480px) {
+  .formWrapper {
+    padding: 1.5rem 1rem;
+    border-radius: 8px;
+  }
 }
