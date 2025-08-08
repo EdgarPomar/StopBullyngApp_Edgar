@@ -21,7 +21,7 @@ const Login: React.FC = () => {
       await loginUser(email, password);
       const currentUser = await getCurrentUser(); // 👈 obtenemos los datos del usuario
       setUser(currentUser); // 👈 actualizamos el context
-      navigate('/');
+      navigate('/Game');
       console.log(currentUser);
     } catch (err: unknown) {
       if (err instanceof Error) {
