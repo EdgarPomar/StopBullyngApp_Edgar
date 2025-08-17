@@ -5,16 +5,23 @@ import { Ticker } from 'pixi.js';
 export abstract class Game {  
   public scene: SceneManager; 
   private app: PIXI.Application;
+  
+  //prepare the relative coordinate values of the Client Resolution
+  protected preferredX: number = 800;
+  protected preferredY: number = 600;
 
   abstract Update(delta: Ticker): void;
 
   constructor() {
     this.app = new PIXI.Application();
-    this.scene = new SceneManager(this.app);           
+    this.scene = new SceneManager(this.app);               
   }
   
   Initialize = async (x: number, y: number) => {
-    await this.InitGPU(x, y);
+    this.preferredX = x;
+    this.preferredY = y;
+
+    await this.InitGPU(this.preferredX, this.preferredY);
     
     this.app.ticker.add((delta) => {
       this.Update(delta);

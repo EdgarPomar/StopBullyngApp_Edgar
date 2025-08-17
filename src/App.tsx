@@ -8,6 +8,9 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import { useAuth } from './hooks/useAuth';
 import GameViewport from './pages/GameViewport';
+import styles from './styles/Apptsx.module.css';
+
+
 
 const App: React.FC = () => {
   const { user } = useAuth();
@@ -15,7 +18,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <AppBar />
-      <main style={{ marginTop: '60px', marginBottom: '50px', padding: '20px' }}>
+      <main className={styles.appMain}>
         <Routes>
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />

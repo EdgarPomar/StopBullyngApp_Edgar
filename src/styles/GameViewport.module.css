@@ -1,0 +1,12 @@
+.viewGame{
+  position: relative;
+  background-color: green;
+  align-items: center;
+}
+
+@media (max-width: 480px) {
+  .viewGame {
+    padding: 1.5rem 1rem;
+    /* border-radius: 8px; */
+  }
+}

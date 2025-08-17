@@ -61,7 +61,7 @@ export class SceneManager {
         // Texto
         const style = new TextStyle({
             fontFamily: "Arial",
-            fontSize: 16,
+            fontSize: 14,
             fill: "black",
             align: "center",
             wordWrap: true,
@@ -86,19 +86,35 @@ export class SceneManager {
     }
 
     AddText(text: string, x: number, y: number, maxWidth: number = 800) {
+        const screenWidth = this.app.screen.width;
+
+        // Ajuste de ancho para móviles
+        if (screenWidth <= 600) {
+            maxWidth = screenWidth - 40; // margen lateral
+        }
+
         const style = new TextStyle({
             fontFamily: "Arial",
-            fontSize: 24,
+            fontSize: 18,
             fill: "black",
             wordWrap: true,
             wordWrapWidth: maxWidth,
+            align: "center"
         });
 
         const message = new Text(text, style);
         message.x = x;
         message.y = y;
+
         this.scene.addChild(message);
+
+        // 🛠 Ajuste de posición si es texto largo en móvil
+        if (screenWidth <= 600 && message.height > 100) {
+            message.y = this.app.screen.height / 2; // mover debajo
+        }
+
         this.centerScene();
     }
+
 }
 
