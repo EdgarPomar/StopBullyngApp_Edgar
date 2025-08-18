@@ -1,66 +1,49 @@
+/* ✅ Base para todos los dispositivos (móviles primero) */
 .container {
   max-width: 1000px;
-  margin: 80px auto;
-  padding: 2rem;
+  margin: 20px auto; /* Reducido para móviles */
+  padding: 1rem; /* Reducido para móviles */
   background-color: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
 }
 
 h1 {
   text-align: center;
   color: #1976d2;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem; /* Reducido para móviles */
+  font-size: 1.5rem; /* Tamaño de fuente para móviles */
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .table th,
 .table td {
   border: 1px solid #ddd;
-  padding: 12px 16px;
+  padding: 8px 10px; /* Reducido para móviles */
   text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 200px;
+  white-space: normal;
+  overflow: visible;
+  text-overflow: unset;
 }
 
-.table th {
-  background-color: #f5f5f5;
-  font-weight: 600;
-  color: #333;
-}
-
-.table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.table tr:hover {
-  background-color: #e3f2fd;
-}
-
-.error {
-  color: red;
-  text-align: center;
-  margin-top: 1rem;
-}
-
-.email {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 160px;
-  display: inline-block;
-}
-
-/* ✅ Responsive stacked layout for small screens */
-@media screen and (max-width: 768px) {
+/* 📱 Diseño "stacked" para móviles pequeños */
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 0.5rem;
+    margin: 10px auto;
+  }
+  
+  h1 {
+    font-size: 1.2rem;
+  }
+  
   .table,
   .table thead,
   .table tbody,
@@ -80,16 +63,17 @@ h1 {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 6px;
-    padding: 1rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    padding: 0.5rem; /* Reducido para que quepa todo */
   }
 
   .table td {
     display: flex;
     justify-content: space-between;
-    padding: 8px 0;
+    align-items: flex-start;
+    padding: 6px 0;
     border: none;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
+    word-break: break-word;
   }
 
   .table td::before {
@@ -97,21 +81,63 @@ h1 {
     font-weight: 600;
     color: #1976d2;
     flex: 1;
-    padding-right: 1rem;
+    padding-right: 0.5rem;
   }
 
-  .table td {
+  .table td span {
     flex: 2;
-    white-space: normal;
-    overflow: visible;
-    text-overflow: unset;
-  }
-  .email {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 160px;
-    display: inline-block;
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
+  .email {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+    font-size: 0.75rem; /* Tamaño de letra más pequeño para emails largos */
+  }
+}
+
+/* 💻 Tablets y portátiles pequeños */
+@media screen and (min-width: 481px) and (max-width: 991px) {
+  .container {
+    margin: 40px auto;
+    padding: 1.5rem;
+  }
+  
+  h1 {
+    font-size: 1.8rem;
+  }
+  
+  .table {
+    font-size: 0.85rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 10px 12px;
+    word-break: break-word;
+    white-space: normal;
+  }
+}
+
+/* 🖥️ Escritorio grande */
+@media screen and (min-width: 992px) {
+  .container {
+    margin: 80px auto;
+    padding: 2rem;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  
+  .table {
+    font-size: 0.95rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 12px 16px;
+  }
 }
