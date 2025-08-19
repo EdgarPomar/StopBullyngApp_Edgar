@@ -6,8 +6,28 @@ import { useAuth } from '../hooks/useAuth';
 const AppBar: React.FC = () => {
   const { user, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
+  const toggleAvatarMenu = () => setAvatarMenuOpen(!avatarMenuOpen);
+
+  const renderMenuItems = () => {
+    if (!user) {
+      return (
+        <>
+          <Link to="/login">Login</Link>
+          <Link to="/register">Register</Link>
+        </>
+      );
+    }
+    return (
+      <>
+        <a href="#">Perfil</a>
+        {user.labels?.includes('admin') && <Link to="/dashboard">Dashboard</Link>}
+        <button onClick={logout} className={styles.logoutBtn}>Logout</button>
+      </>
+    );
+  };
 
   return (
     <header className={styles.appBar}>
@@ -15,31 +35,30 @@ const AppBar: React.FC = () => {
         <img src="/logo.png" alt="Logo" className={styles.logo} />
       </div>
 
-      <div className={styles.avatarContainer} onClick={toggleMenu}>
+      {/* Avatar (solo tablet/desktop) */}
+      <div className={styles.avatarContainer} onClick={toggleAvatarMenu}>
         {user && <span className={styles.userName}>{user.name}</span>}
         <img src="/avatar.png" alt="User Avatar" className={styles.avatar} />
 
-        {menuOpen && (
+        {avatarMenuOpen && (
           <div className={styles.dropdownMenu}>
-            {!user ? (
-              <>
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
-              </>
-            ) : (
-              <>
-                <a href="#">Perfil</a>
-                {user.labels?.includes('admin') && (
-                  <Link to="/dashboard">Dashboard</Link>
-                )}
-                <button onClick={logout} className={styles.logoutBtn}>
-                  Logout
-                </button>
-              </>
-            )}
+            {renderMenuItems()}
           </div>
         )}
       </div>
+
+      {/* Burger menu (solo móvil) */}
+      <div className={styles.burgerContainer} onClick={toggleMenu}>
+        {user && <span className={styles.userNameMobile}>{user.name}</span>}
+        <div className={styles.burger}>&#9776;</div>
+      </div>
+
+      {/* Menú móvil desplegable */}
+      {menuOpen && (
+        <nav className={styles.mobileMenu}>
+          {renderMenuItems()}
+        </nav>
+      )}
     </header>
   );
 };

@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   height: 60px;
-  background-color: #1976d2; /* Azul Material Design */
+  background-color: #1976d2;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -20,29 +20,18 @@
 }
 
 .logo {
-  height: 60px;
+  height: 40px;
   margin-right: 8px;
 }
 
-.nav a {
-  color: white;
-  margin: 0 10px;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.nav a:hover {
-  text-decoration: underline;
-}
-
+/* Avatar (solo tablet/desktop) */
 .avatarContainer {
   position: relative;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 10px; /* 👈 separa el texto del avatar mejor */
+  gap: 10px;
 }
-
 
 .avatar {
   height: 35px;
@@ -65,38 +54,90 @@
   min-width: 150px;
 }
 
-.dropdownMenu a {
+.dropdownMenu a,
+.logoutBtn {
   padding: 10px;
   text-decoration: none;
   color: #333;
-}
-
-.dropdownMenu a:hover {
-  background-color: #f5f5f5;
-}
-
-.userName {
-  margin-right: 12px;              /* Espaciado entre texto y avatar */
-  font-weight: 600;                /* Más presencia */
-  font-size: 1rem;
-  color: white;
-  font-family: 'Poppins', sans-serif;  /* Usa tu fuente personalizada */
-  display: flex;
-  align-items: center;
-}
-
-
-.logoutBtn {
   background: none;
   border: none;
   text-align: left;
-  padding: 10px;
-  font-size: 1rem;
-  color: #333;
   cursor: pointer;
 }
 
+.dropdownMenu a:hover,
 .logoutBtn:hover {
   background-color: #f5f5f5;
 }
 
+.userName {
+  font-weight: 600;
+  font-size: 1rem;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+}
+
+/* Burger menu (solo móvil) */
+.burgerContainer {
+  display: none; /* oculto por defecto */
+  align-items: center;
+  gap: 24px;
+  cursor: pointer;
+}
+
+.burger {
+  font-size: 1.8rem;
+  color: white;
+}
+
+.userNameMobile {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: white;
+}
+
+/* Menú móvil */
+.mobileMenu {
+  display: none;
+  flex-direction: column;
+  position: fixed;
+  top: 60px;
+  right: 0;
+  left: 0;
+  background-color: #1976d2;
+  z-index: 999;
+}
+
+.mobileMenu a,
+.mobileMenu button {
+  padding: 15px 20px;
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobileMenu a:hover,
+.mobileMenu button:hover {
+  background-color: #1565c0;
+}
+
+/* Móvil: ocultar avatar y mostrar burger */
+@media screen and (max-width: 480px) {
+  .avatarContainer {
+    display: none;
+  }
+
+  .burgerContainer {
+    display: flex;
+  }
+
+  .mobileMenu {
+    display: flex;
+  }
+}
