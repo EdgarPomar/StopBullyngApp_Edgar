@@ -59,7 +59,9 @@ const Dashboard: React.FC = () => {
             {usuarios.map((u) => (
               <tr key={u.$id}>
                 <td data-label="Nombre">{u.name}</td>
-                <td data-label="Email" className={styles.email}>{u.email}</td>
+                <td data-label="Email" >
+                  <span className={styles.email}>{u.email}</span>
+                </td>
                 <td data-label="Rol">{u.role || 'N/A'}</td>
               </tr>
             ))}

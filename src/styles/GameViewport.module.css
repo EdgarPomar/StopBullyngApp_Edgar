@@ -1,12 +1,33 @@
-.viewGame{
-  position: relative;
+.viewGame {
+  width: 100%;
+  height: 100%;           /* ocupa todo el alto del main */
   background-color: green;
+
+  display: flex;
+  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;        /* permite bloques debajo en móviles */
+  box-sizing: border-box;
 }
 
-@media (max-width: 480px) {
+/* móviles */
+@media (max-width: 576px) {
   .viewGame {
-    padding: 1.5rem 1rem;
-    /* border-radius: 8px; */
+    flex-direction: column;  /* uno debajo del otro */
+    padding: 10px;
+  }
+}
+
+/* tablets */
+@media (min-width: 577px) and (max-width: 992px) {
+  .viewGame {
+    padding: 20px;
+  }
+}
+
+/* escritorio */
+@media (min-width: 993px) {
+  .viewGame {
+    padding: 40px;
   }
 }

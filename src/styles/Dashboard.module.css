@@ -30,7 +30,8 @@ h1 {
   text-align: left;
   white-space: normal;
   overflow: visible;
-  text-overflow: unset;
+  text-overflow: ellipsis;
+  word-break: break-all;
 }
 
 /* 📱 Diseño "stacked" para móviles pequeños */
@@ -82,20 +83,24 @@ h1 {
     color: #1976d2;
     flex: 1;
     padding-right: 0.5rem;
+    word-break: break-all;
   }
 
   .table td span {
     flex: 2;
     min-width: 0;
     overflow-wrap: anywhere;
+    word-break: break-all;
   }
 
   .email {
-    white-space: normal;
-    overflow-wrap: anywhere;
-    max-width: 100%;
-    font-size: 0.75rem; /* Tamaño de letra más pequeño para emails largos */
+    white-space: nowrap;       
+    overflow: hidden;           
+    text-overflow: ellipsis;    
+    width: 200px;
+    text-align: right;
   }
+
 }
 
 /* 💻 Tablets y portátiles pequeños */
@@ -119,6 +124,7 @@ h1 {
     word-break: break-word;
     white-space: normal;
   }
+  
 }
 
 /* 🖥️ Escritorio grande */
