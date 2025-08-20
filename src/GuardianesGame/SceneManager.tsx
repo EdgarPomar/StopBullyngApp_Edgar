@@ -65,11 +65,11 @@ export class SceneManager {
             fill: "black",
             align: "center",
             wordWrap: true,
-            wordWrapWidth: size.x - 10,
+            wordWrapWidth: size.x + 8,
         });
         const buttonText = new Text(text, style);
         buttonText.anchor.set(0.5);
-        buttonText.x = size.x / 2;
+        buttonText.x = size.x / 2 - 30;
         buttonText.y = size.y / 2;
         buttonContainer.addChild(buttonText);
 

@@ -13,3 +13,6 @@ Para test unitarios: jest
 Web del juego: fichero GameViewport.tsx y css GameViewport.module.css
 Juego : fichero Game.tsx (contendrá una clase en que almacenará las estructuras y la lógica)
 
+Enlace para la documentación de pixiJS: 
+	https://pixijs.download/v4.8.9/docs/PIXI.settings.html
+	https://coderevue.net/posts/scale-to-fit-screen-pixijs/

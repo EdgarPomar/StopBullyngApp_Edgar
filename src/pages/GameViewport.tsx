@@ -14,28 +14,32 @@ const GameViewport: React.FC = () => {
     iniciado.current = true;
 
     const div = viewportRef.current;
-    if (!div) return;
+    if (!div) {
+      return;
+    }
+    
+    // Inicializar juego con las dimensiones del div
+    const guardian: GuardianesGame = new GuardianesGame();
 
     // Función para actualizar resoluciones
-    const actualizarResolucion = () => {
+    const actualizarResolucion = () => {      
       setResolucionX(div.offsetWidth);
       setResolucionY(div.offsetHeight);
-    };
-
-    // Inicializar con las dimensiones actuales
-    actualizarResolucion();
-
+      
+      //guardian.ChangeScreenResolution(div.offsetWidth, div.offsetHeight);
+      
+    };    
     // Observar cambios de tamaño del div
     const observer = new ResizeObserver(() => {
       actualizarResolucion();
     });
 
-    observer.observe(div);
-
-    // Inicializar juego con las dimensiones del div
-    const guardian: GuardianesGame = new GuardianesGame();
+    observer.observe(div);    
     guardian.Initialize(div.offsetWidth, div.offsetHeight);
-
+    
+    // Inicializar con las dimensiones actuales
+    actualizarResolucion();
+    
     return () => {
       observer.disconnect();
     };

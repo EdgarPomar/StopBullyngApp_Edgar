@@ -7,10 +7,10 @@ export class Rectangle extends Vector2{
     private height: number;
         
     constructor(x: number, y: number, width: number, height: number){          
-        if (!Number.isInteger(x)) throw new Error("El valor debe ser un número entero");
-        if (!Number.isInteger(y)) throw new Error("El valor debe ser un número entero");
-        if (!Number.isInteger(width)) throw new Error("El valor debe ser un número entero");
-        if (!Number.isInteger(height)) throw new Error("El valor debe ser un número entero");
+        if (!Number.isInteger(Math.round(x))) throw new Error("El valor debe ser un número entero");        
+        if (!Number.isInteger(Math.round(y))) throw new Error("El valor debe ser un número entero");
+        if (!Number.isInteger(Math.round(width))) throw new Error("El valor debe ser un número entero");
+        if (!Number.isInteger(Math.round(height))) throw new Error("El valor debe ser un número entero");
         super(x, y);
 
         this.width = width;    

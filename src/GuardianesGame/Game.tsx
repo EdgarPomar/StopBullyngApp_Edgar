@@ -35,10 +35,17 @@ export abstract class Game {
       const context = document.getElementById("viewportGame");
       if (context != null) {
 
-        await this.app.init({ height: y, width: x, background: '#FFFFFF' });
+        await this.app.init(
+          { 
+            height: y,
+            width: x, 
+            background: '#FFFFFF',
+            resizeTo: context, 
+          }
+        );
 
         if (this.app == null) {
-          console.log("CAGADA");
+          console.log("NO SE PUDO INICIAR LA GPU");
           return;
         }
 
