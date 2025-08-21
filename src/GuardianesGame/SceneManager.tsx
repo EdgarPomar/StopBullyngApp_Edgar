@@ -1,4 +1,4 @@
-import { Application, Container, Sprite, Texture, Text, TextStyle, Graphics } from "pixi.js";
+import { Application, Container, Sprite, Texture, Text, TextStyle, Graphics, HTMLText } from "pixi.js";
 import { Rectangle } from "./Rectangle";
 import { Point } from "./types/Point";
 
@@ -22,6 +22,23 @@ export class SceneManager {
         const actorLocation: Point = actorRectangle.getLocation();
         const actorSize: Point = actorRectangle.getSize();
         const actor = new Sprite(texture);
+
+        actor.x = actorLocation.x;
+        actor.y = actorLocation.y;
+        actor.width = actorSize.x;
+        actor.height = actorSize.y;
+        
+        actor.eventMode = 'static';
+        actor.on('pointerdown', () => {
+            console.log('Sprite clicked!');
+        });
+        this.scene.addChild(actor);
+        this.centerScene();
+    }
+    AddLabel(actorRectangle: Rectangle, labelText: HTMLText) {
+        const actorLocation: Point = actorRectangle.getLocation();
+        const actorSize: Point = actorRectangle.getSize();
+        const actor = new Text(labelText);
 
         actor.x = actorLocation.x;
         actor.y = actorLocation.y;
