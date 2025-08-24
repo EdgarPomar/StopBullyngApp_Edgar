@@ -1,11 +1,13 @@
 {
   "name": "stopbullyingapp-edgar",
+  "homepage": "https://edgarpomar.github.io/StopBullyngApp_Edgar/",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "deploy": "gh-pages -d dist",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "jest"
