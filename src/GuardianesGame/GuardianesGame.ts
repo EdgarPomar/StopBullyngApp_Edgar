@@ -4,20 +4,21 @@ import {Rectangle} from "./Rectangle";
 import {getSceneByNumericId} from "./services/scenesService";  // ruta correcta
 import {Scene} from "./types/sceneType";
 import Button from "./components/Button";
+import Label from "./components/Label.ts";
+import {Content} from "./Filesystem/Content.ts";
 
 export class GuardianesGame extends Game {
     private currentScene: Scene | null = null;
 
-    private GetPath(filename: string): string {
-        return `${window.location.origin.replace(/\/$/, "")}/${filename}`;
-    }
+    private walkerchar: AnimatedSprite | null = null;
 
     private async LoadAssets() {
-        const textureBg: Texture = await Assets.load(this.GetPath("fondo.png"));
-        this.scene.Add(new Rectangle(0, 0, this.preferredX + 72, this.preferredY), textureBg);
+        const textureBg: Texture = await Assets.load(this.GetPath(Content.backgrounds, "fondo.png"));
+        const textureButton: Texture = await Assets.load(this.GetPath(Content.ui, "GenericButton.svg"));
+        const walker_sheet = await Assets.load(this.GetPath(Content.characters, 'walker.json'));
 
+        this.scene.Add(new Rectangle(0, 0, this.preferredX + 72, this.preferredY), textureBg);
         // Carga texturas de botones
-        const textureButton: Texture = await Assets.load(this.GetPath("GenericButton.svg"));
         // Carga escena por id numérico, por ejemplo 1
         this.currentScene = await getSceneByNumericId(1);
 
@@ -35,6 +36,16 @@ export class GuardianesGame extends Game {
                     wordWrap: false,
                     wordWrapWidth: 0,
                 }
+            );
+            new Label(
+                this.scene,
+                "title_label",
+                "DB BLABLABLA?",
+                arialFont,
+                (this.preferredX / 2) - 75,
+                (this.preferredY / 2) - 210,
+                360,
+                60,
             );
 
             // Botón 1
@@ -101,18 +112,27 @@ export class GuardianesGame extends Game {
                 console.log("Callback botón 4 ejecutado");
             });
 
-            const sheet = await Assets.load(this.GetPath('sprites/walker.json'));
-            const spritesheet = sheet.animations['walk'];
-            const walkerchar: AnimatedSprite = this.scene.AddAnimatedSprite(
+            const walker_animator = walker_sheet.animations['walk'];
+            /*const walkerchar: AnimatedSprite = this.scene.AddAnimatedSprite(
                 new Rectangle(
                     this.preferredX / 2,
-                    this.preferredY / 2,
+                    this.preferredY / 2 - 45,
                     650 / 2,
                     650 / 2),
-                spritesheet
+                walker_animator
+            );*/
+
+            this.walkerchar = this.scene.AddAnimatedSprite(
+                new Rectangle(
+                    this.preferredX / 2 - 550,
+                    this.preferredY / 2 - 45,
+                    650 / 2,
+                    650 / 2),
+                walker_animator
             );
-            this.scene.PlayAnimatedSprite(walkerchar);
-            this.scene.SetAnimatedSpriteSpeed(walkerchar, 0.1);
+
+            this.scene.PlayAnimatedSprite(this.walkerchar);
+            this.scene.SetAnimatedSpriteSpeed(this.walkerchar, 0.1);
             if (this.preferredX > 768) {
                 console.log();
             }
@@ -126,7 +146,11 @@ export class GuardianesGame extends Game {
     }
 
     Update(delta: Ticker): void {
-//        console.log(delta.deltaTime + "ms, " + delta.FPS + " FPS");
+        console.log(delta.deltaTime + "ms, " + delta.FPS + " FPS");
+        if (this.walkerchar != null) {
+            this.walkerchar.x = this.walkerchar.x += 0.5;
+        }
+
     }
 
 
