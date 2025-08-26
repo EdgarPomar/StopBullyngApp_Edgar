@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { GuardianesGame } from '../GuardianesGame/GuardianesGame';
 import styles from '../styles/GameViewport.module.css';
+import AudioManager from "../GuardianesGame/Manager/AudioManager.tsx";
 
 const GameViewport: React.FC = () => {
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -47,6 +48,7 @@ const GameViewport: React.FC = () => {
 
   return (
     <div>
+      <AudioManager/>
       <div
         id="viewportGame"
         ref={viewportRef}

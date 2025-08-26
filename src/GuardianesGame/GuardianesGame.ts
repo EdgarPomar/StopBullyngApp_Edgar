@@ -5,8 +5,9 @@ import {getSceneByNumericId} from "./services/scenesService";  // ruta correcta
 import {Scene} from "./types/sceneType";
 import Button from "./components/Button";
 import Label from "./components/Label.ts";
-import {Content} from "./Filesystem/Content.ts";
+
 import {Modal} from "./components/Modal.ts";
+import {ContentManager} from "./Filesystem/Content.ts";
 
 export class GuardianesGame extends Game {
     private currentScene: Scene | null = null;
@@ -14,9 +15,11 @@ export class GuardianesGame extends Game {
     private walkerchar: AnimatedSprite | null = null;
 
     private async LoadAssets() {
-        const textureBg: Texture = await Assets.load(this.GetPath(Content.backgrounds, "fondo.png"));
-        const textureButton: Texture = await Assets.load(this.GetPath(Content.ui, "GenericButton.svg"));
-        const walker_sheet = await Assets.load(this.GetPath(Content.characters, 'walker.json'));
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+
+        const textureBg: Texture = await Assets.load(ContentManager.GetPath(ContentManager.Content.backgrounds, "fondo.png"));
+        const textureButton: Texture = await Assets.load(ContentManager.GetPath(ContentManager.Content.ui, "GenericButton.svg"));
+        const walker_sheet = await Assets.load(ContentManager.GetPath(ContentManager.Content.characters, 'walker.json'));
 
         this.scene.Add(new Rectangle(0, 0, this.preferredX + 72, this.preferredY), textureBg);
         // Carga texturas de botones

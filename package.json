@@ -16,11 +16,13 @@
     "appwrite": "^18.2.0",
     "dotenv": "^17.2.1",
     "gsap": "^3.13.0",
+    "howler": "^2.2.4",
     "node-appwrite": "^17.2.0",
     "pixi.js": "^8.11.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.7.0"
+    "react-router-dom": "^7.7.0",
+    "use-sound": "^5.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

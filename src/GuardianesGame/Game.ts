@@ -18,11 +18,6 @@ export abstract class Game {
         this.scene = new SceneManager(this.app);
     }
 
-    protected GetPath(ContentPath: string, filename: string): string {
-        const programRoot = `${window.location.origin.replace(/\/$/, "")}/${ContentPath}/${filename}`;
-        return programRoot;
-    }
-
     Initialize = async (x: number, y: number) => {
         this.preferredX = x;
         this.preferredY = y;
