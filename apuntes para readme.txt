@@ -12,7 +12,7 @@ Base de datos utilizado: appwrite
 Para test unitarios: jest
 Web del juego: fichero GameViewport.tsx y css GameViewport.module.css
 Juego : fichero Game.tsx (contendrá una clase en que almacenará las estructuras y la lógica)
-
+Para crear modal (para las reflexiones del juego) : se ha utilizado la librería gsap (animaciones) y en Pixijs.Graphics()
 Enlace para la documentación de pixiJS: 
 	https://pixijs.download/v4.8.9/docs/PIXI.settings.html
 	https://coderevue.net/posts/scale-to-fit-screen-pixijs/

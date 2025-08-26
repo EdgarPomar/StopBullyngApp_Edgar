@@ -6,10 +6,11 @@ import {Scene} from "./types/sceneType";
 import Button from "./components/Button";
 import Label from "./components/Label.ts";
 import {Content} from "./Filesystem/Content.ts";
+import {Modal} from "./components/Modal.ts";
 
 export class GuardianesGame extends Game {
     private currentScene: Scene | null = null;
-
+    private modal: Modal | null = null;
     private walkerchar: AnimatedSprite | null = null;
 
     private async LoadAssets() {
@@ -26,6 +27,7 @@ export class GuardianesGame extends Game {
             // Primero pintamos la pregunta (ajusta posición y ancho si quieres)
             //this.scene.AddText(this.currentScene.pregunta, this.preferredX/2 - 128, this.preferredY/2 - 128, 600);
 
+            this.modal = new Modal(this.scene.GetApp()); // suponiendo que GetApp() devuelve PIXI.Application
             // Luego pintamos las opciones como botones
             const arialFont = new TextStyle(
                 {
@@ -40,7 +42,7 @@ export class GuardianesGame extends Game {
             new Label(
                 this.scene,
                 "title_label",
-                "DB BLABLABLA?",
+                this.currentScene.pregunta,
                 arialFont,
                 (this.preferredX / 2) - 75,
                 (this.preferredY / 2) - 210,
@@ -61,7 +63,11 @@ export class GuardianesGame extends Game {
                 textureButton
             );
             btn1.OnClick(btn1.GetSprite(), () => {
-                console.log("Callback botón 1 ejecutado");
+                if(this.modal != null) {
+                    this.modal.setText("Aquí va la reflexión para el botón 1");
+                    this.modal.open();
+                    console.log("Callback botón 1 ejecutado");
+                }
             });
 
             // Botón 2
@@ -77,7 +83,11 @@ export class GuardianesGame extends Game {
                 textureButton
             );
             btn2.OnClick(btn2.GetSprite(), () => {
-                console.log("Callback botón 2 ejecutado");
+                if(this.modal != null) {
+                    this.modal.setText("Aquí va la reflexión para el botón 1");
+                    this.modal.open();
+                    console.log("Callback botón 2 ejecutado");
+                }
             });
 
             // Botón 3
@@ -93,7 +103,12 @@ export class GuardianesGame extends Game {
                 textureButton
             );
             btn3.OnClick(btn3.GetSprite(), () => {
-                console.log("Callback botón 3 ejecutado");
+                if(this.modal != null) {
+                    this.modal.setText("Aquí va la reflexión para el botón 1");
+                    this.modal.open();
+                    console.log("Callback botón 3 ejecutado");
+                }
+
             });
 
             // Botón 4
@@ -109,7 +124,11 @@ export class GuardianesGame extends Game {
                 textureButton
             );
             btn4.OnClick(btn4.GetSprite(), () => {
-                console.log("Callback botón 4 ejecutado");
+                if(this.modal !=null) {
+                    this.modal.setText("Aquí va la reflexión para el botón 1");
+                    this.modal.open();
+                    console.log("Callback botón 4 ejecutado");
+                }
             });
 
             const walker_animator = walker_sheet.animations['walk'];
@@ -147,6 +166,7 @@ export class GuardianesGame extends Game {
 
     Update(delta: Ticker): void {
         console.log(delta.deltaTime + "ms, " + delta.FPS + " FPS");
+
         if (this.walkerchar != null) {
             this.walkerchar.x = this.walkerchar.x += 0.5;
         }

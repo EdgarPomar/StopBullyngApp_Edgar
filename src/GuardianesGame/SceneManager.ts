@@ -4,7 +4,7 @@ import { Point } from "./types/Point";
 
 export class SceneManager {
     private scene: Container = new Container();
-    private app: Application;
+    private readonly app: Application;
 
     constructor(gameapp: Application) {
         this.app = gameapp;
@@ -95,8 +95,8 @@ export class SceneManager {
 
         // Borde estilo tabla
         const border = new Graphics();
-        border.lineStyle(2, 0x000000);
-        border.drawRect(0, 0, size.x, size.y);
+        border.stroke({ width: 2, color: 0x000000, alpha: 1 })
+              .rect(0,0,size.x,size.y);
         buttonContainer.addChild(border);
 
         // Texto
@@ -157,5 +157,8 @@ export class SceneManager {
         this.centerScene();
     }
 
+    GetApp(): Application {
+        return this.app;
+    }
 }
 
