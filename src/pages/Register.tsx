@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from '../styles/Register.module.css';
 import typography from '../styles/Typography.module.css';
 import { registerUser } from '../services/userService';
+import {account} from "../lib/appwrite.ts";
 
 const Register: React.FC = () => {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ const Register: React.FC = () => {
 
     try {
       await registerUser(email, password, username);
+      await account.deleteSession('current');
       navigate('/login');
     } catch (err: unknown) {
       if (err instanceof Error) {

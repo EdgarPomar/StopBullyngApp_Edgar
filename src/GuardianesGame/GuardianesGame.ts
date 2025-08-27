@@ -8,6 +8,7 @@ import Label from "./components/Label.ts";
 
 import {Modal} from "./components/Modal.ts";
 import {ContentManager} from "./Filesystem/Content.ts";
+import {AudioPlayer} from "./Manager/AudioManager.tsx";
 
 export class GuardianesGame extends Game {
     private currentScene: Scene | null = null;
@@ -15,11 +16,12 @@ export class GuardianesGame extends Game {
     private walkerchar: AnimatedSprite | null = null;
 
     private async LoadAssets() {
-        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-
         const textureBg: Texture = await Assets.load(ContentManager.GetPath(ContentManager.Content.backgrounds, "fondo.png"));
         const textureButton: Texture = await Assets.load(ContentManager.GetPath(ContentManager.Content.ui, "GenericButton.svg"));
         const walker_sheet = await Assets.load(ContentManager.GetPath(ContentManager.Content.characters, 'walker.json'));
+
+        const audioSong = ContentManager.GetPath(ContentManager.Content.music, 'gcbullyingscene.ogg');
+
 
         this.scene.Add(new Rectangle(0, 0, this.preferredX + 72, this.preferredY), textureBg);
         // Carga texturas de botones
@@ -71,6 +73,9 @@ export class GuardianesGame extends Game {
                     this.modal.open();
                     console.log("Callback botón 1 ejecutado");
                 }
+
+
+
             });
 
             // Botón 2
@@ -87,7 +92,7 @@ export class GuardianesGame extends Game {
             );
             btn2.OnClick(btn2.GetSprite(), () => {
                 if(this.modal != null) {
-                    this.modal.setText("Aquí va la reflexión para el botón 1");
+                    this.modal.setText("Aquí va la reflexión para el botón 2");
                     this.modal.open();
                     console.log("Callback botón 2 ejecutado");
                 }
@@ -107,7 +112,7 @@ export class GuardianesGame extends Game {
             );
             btn3.OnClick(btn3.GetSprite(), () => {
                 if(this.modal != null) {
-                    this.modal.setText("Aquí va la reflexión para el botón 1");
+                    this.modal.setText("Aquí va la reflexión para el botón 3");
                     this.modal.open();
                     console.log("Callback botón 3 ejecutado");
                 }
@@ -128,22 +133,13 @@ export class GuardianesGame extends Game {
             );
             btn4.OnClick(btn4.GetSprite(), () => {
                 if(this.modal !=null) {
-                    this.modal.setText("Aquí va la reflexión para el botón 1");
+                    this.modal.setText("Aquí va la reflexión para el botón 4");
                     this.modal.open();
                     console.log("Callback botón 4 ejecutado");
                 }
             });
 
             const walker_animator = walker_sheet.animations['walk'];
-            /*const walkerchar: AnimatedSprite = this.scene.AddAnimatedSprite(
-                new Rectangle(
-                    this.preferredX / 2,
-                    this.preferredY / 2 - 45,
-                    650 / 2,
-                    650 / 2),
-                walker_animator
-            );*/
-
             this.walkerchar = this.scene.AddAnimatedSprite(
                 new Rectangle(
                     this.preferredX / 2 - 550,
@@ -158,6 +154,15 @@ export class GuardianesGame extends Game {
             if (this.preferredX > 768) {
                 console.log();
             }
+
+            const player = new AudioPlayer(audioSong, false, 0.8);
+
+            /*player.pause();   // Pause
+            player.stop();    // Stop and reset*/
+            player.setVolume(0.5); // Set volume to 50%
+            player.setLoop(true);  // Enable looping
+            player.play();    // Start playing
+
         } else {
             console.error("No se pudo cargar la escena con id numérico 1");
         }
