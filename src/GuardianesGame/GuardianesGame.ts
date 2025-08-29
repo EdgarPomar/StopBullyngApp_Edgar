@@ -9,9 +9,12 @@ import Label from "./components/Label.ts";
 import {Modal} from "./components/Modal.ts";
 import {ContentManager} from "./Filesystem/Content.ts";
 import {AudioPlayer} from "./Manager/AudioManager.tsx";
+import {getReflexionesByEscenaPrefix} from "./services/reflexionesService.ts";
+import {Reflexion} from "./types/reflectionType.ts";
 
 export class GuardianesGame extends Game {
     private currentScene: Scene | null = null;
+    private currentReflection: Reflexion[] | null = null;
     private modal: Modal | null = null;
     private walkerchar: AnimatedSprite | null = null;
 
@@ -27,6 +30,7 @@ export class GuardianesGame extends Game {
         // Carga texturas de botones
         // Carga escena por id numérico, por ejemplo 1
         this.currentScene = await getSceneByNumericId(1);
+        this.currentReflection = await getReflexionesByEscenaPrefix('1');
 
         if (this.currentScene) {
             // Primero pintamos la pregunta (ajusta posición y ancho si quieres)
@@ -69,13 +73,13 @@ export class GuardianesGame extends Game {
             );
             btn1.OnClick(btn1.GetSprite(), () => {
                 if(this.modal != null) {
-                    this.modal.setText("Aquí va la reflexión para el botón 1");
+                    if(this.currentReflection != null) {
+                        const reflectionText: string = this.currentReflection[0].texto;
+                        this.modal.setText(reflectionText)
+                    }
                     this.modal.open();
                     console.log("Callback botón 1 ejecutado");
                 }
-
-
-
             });
 
             // Botón 2
@@ -92,9 +96,11 @@ export class GuardianesGame extends Game {
             );
             btn2.OnClick(btn2.GetSprite(), () => {
                 if(this.modal != null) {
-                    this.modal.setText("Aquí va la reflexión para el botón 2");
+                    if(this.currentReflection != null) {
+                        const reflectionText: string = this.currentReflection[1].texto;
+                        this.modal.setText(reflectionText)
+                    }
                     this.modal.open();
-                    console.log("Callback botón 2 ejecutado");
                 }
             });
 
@@ -112,7 +118,10 @@ export class GuardianesGame extends Game {
             );
             btn3.OnClick(btn3.GetSprite(), () => {
                 if(this.modal != null) {
-                    this.modal.setText("Aquí va la reflexión para el botón 3");
+                    if(this.currentReflection != null) {
+                        const reflectionText: string = this.currentReflection[2].texto;
+                        this.modal.setText(reflectionText)
+                    }
                     this.modal.open();
                     console.log("Callback botón 3 ejecutado");
                 }
@@ -133,7 +142,10 @@ export class GuardianesGame extends Game {
             );
             btn4.OnClick(btn4.GetSprite(), () => {
                 if(this.modal !=null) {
-                    this.modal.setText("Aquí va la reflexión para el botón 4");
+                    if(this.currentReflection != null) {
+                        const reflectionText: string = this.currentReflection[3].texto;
+                        this.modal.setText(reflectionText)
+                    }
                     this.modal.open();
                     console.log("Callback botón 4 ejecutado");
                 }
