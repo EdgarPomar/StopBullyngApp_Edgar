@@ -174,7 +174,6 @@ export class GuardianesGame extends Game {
 
     Update(delta: Ticker): void {
         console.log(delta.deltaTime + "ms, " + delta.FPS + " FPS");
-
         if (this.walkerchar != null) {
             this.walkerchar.x = this.walkerchar.x += 0.5;
         }

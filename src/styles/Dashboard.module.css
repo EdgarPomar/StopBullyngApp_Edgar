@@ -1,8 +1,8 @@
 /* ✅ Base para todos los dispositivos (móviles primero) */
 .container {
   max-width: 1000px;
-  margin: 20px auto; /* Reducido para móviles */
-  padding: 1rem; /* Reducido para móviles */
+  margin: 20px auto;
+  padding: 1rem;
   background-color: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -13,8 +13,8 @@
 h1 {
   text-align: center;
   color: #1976d2;
-  margin-bottom: 1rem; /* Reducido para móviles */
-  font-size: 1.5rem; /* Tamaño de fuente para móviles */
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
 .table {
@@ -26,12 +26,51 @@ h1 {
 .table th,
 .table td {
   border: 1px solid #ddd;
-  padding: 8px 10px; /* Reducido para móviles */
+  padding: 8px 10px;
   text-align: left;
   white-space: normal;
   overflow: visible;
   text-overflow: ellipsis;
   word-break: break-all;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+}
+
+.modalActions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modalContent label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.email {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px;
+  text-align: right;
 }
 
 /* 📱 Diseño "stacked" para móviles pequeños */
@@ -40,11 +79,11 @@ h1 {
     padding: 0.5rem;
     margin: 10px auto;
   }
-  
+
   h1 {
     font-size: 1.2rem;
   }
-  
+
   .table,
   .table thead,
   .table tbody,
@@ -64,7 +103,7 @@ h1 {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 6px;
-    padding: 0.5rem; /* Reducido para que quepa todo */
+    padding: 0.5rem;
   }
 
   .table td {
@@ -93,14 +132,25 @@ h1 {
     word-break: break-all;
   }
 
-  .email {
-    white-space: nowrap;       
-    overflow: hidden;           
-    text-overflow: ellipsis;    
-    width: 200px;
-    text-align: right;
+  /* Botones en móviles: alineados horizontalmente, tipo "pill" */
+  .table td[data-label="Acciones"] {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
   }
 
+  .editButton,
+  .deleteButton {
+    flex: 1 1 auto;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    border: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
 }
 
 /* 💻 Tablets y portátiles pequeños */
@@ -109,11 +159,11 @@ h1 {
     margin: 40px auto;
     padding: 1.5rem;
   }
-  
+
   h1 {
     font-size: 1.8rem;
   }
-  
+
   .table {
     font-size: 0.85rem;
   }
@@ -124,7 +174,19 @@ h1 {
     word-break: break-word;
     white-space: normal;
   }
-  
+
+  /* Botones en tablets */
+  .editButton,
+  .deleteButton {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    border: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
 }
 
 /* 🖥️ Escritorio grande */
@@ -133,11 +195,11 @@ h1 {
     margin: 80px auto;
     padding: 2rem;
   }
-  
+
   h1 {
     font-size: 2rem;
   }
-  
+
   .table {
     font-size: 0.95rem;
   }
@@ -146,4 +208,41 @@ h1 {
   .table td {
     padding: 12px 16px;
   }
+
+  /* Botones en escritorio grande */
+  .editButton,
+  .deleteButton {
+    font-size: 0.9rem;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    border: none;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+}
+
+/* Hover efecto botones */
+.editButton:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.deleteButton:hover {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+/* Colores base */
+.editButton {
+  background-color: #4caf50;
+  color: white;
+}
+
+.deleteButton {
+  background-color: red;
+  color: white;
 }
