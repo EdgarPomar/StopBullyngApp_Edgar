@@ -17,6 +17,22 @@ export class GuardianesGame extends Game {
     private currentReflection: Reflexion[] | null = null;
     private modal: Modal | null = null;
     private walkerchar: AnimatedSprite | null = null;
+    private sceneIndex:number = 1;
+
+    private async LoadRoomAsync(idroom :string){
+        this.currentScene = await getSceneByNumericId(parseInt(idroom, 10));
+        this.currentReflection = await getReflexionesByEscenaPrefix(idroom);
+       /* this.btn1.SetText("");
+        this.btn2.SetText("");
+        this.btn3.SetText("");
+        this.btn4.SetText("");*/
+    }
+    private NextRoom(){
+        const sceneName = String(this.sceneIndex);
+        this.LoadRoomAsync(sceneName).then(() => {
+            console.log("Room loaded");
+        }).catch(err => console.error(err));
+    }
 
     private async LoadAssets() {
         const textureBg: Texture = await Assets.load(ContentManager.GetPath(ContentManager.Content.backgrounds, "fondo.png"));
@@ -29,8 +45,13 @@ export class GuardianesGame extends Game {
         this.scene.Add(new Rectangle(0, 0, this.preferredX + 72, this.preferredY), textureBg);
         // Carga texturas de botones
         // Carga escena por id numérico, por ejemplo 1
-        this.currentScene = await getSceneByNumericId(1);
-        this.currentReflection = await getReflexionesByEscenaPrefix('1');
+
+        const sceneName = String(this.sceneIndex);
+        await this.LoadRoomAsync(sceneName);
+
+        /*this.currentScene = await getSceneByNumericId(1);
+        this.currentReflection = await getReflexionesByEscenaPrefix('1');*/
+
 
         if (this.currentScene) {
             // Primero pintamos la pregunta (ajusta posición y ancho si quieres)
@@ -79,6 +100,7 @@ export class GuardianesGame extends Game {
                     }
                     this.modal.open();
                     console.log("Callback botón 1 ejecutado");
+                    this.NextRoom();
                 }
             });
 
@@ -101,6 +123,7 @@ export class GuardianesGame extends Game {
                         this.modal.setText(reflectionText)
                     }
                     this.modal.open();
+                    this.NextRoom();
                 }
             });
 
@@ -124,6 +147,7 @@ export class GuardianesGame extends Game {
                     }
                     this.modal.open();
                     console.log("Callback botón 3 ejecutado");
+                    this.NextRoom();
                 }
 
             });
@@ -148,6 +172,7 @@ export class GuardianesGame extends Game {
                     }
                     this.modal.open();
                     console.log("Callback botón 4 ejecutado");
+                    this.NextRoom();
                 }
             });
 
@@ -182,6 +207,14 @@ export class GuardianesGame extends Game {
 
     LoadContentAsync(): Promise<void> {
         return this.LoadAssets();
+    }
+    UnloadContentAsync(): Promise<void> {
+        const sceneObjectsCount = this.scene.Count();
+        for (let i=0; i < sceneObjectsCount; ++i){
+            const element = this.scene.GetElementByIndex(i);
+            this.scene.Remove(element);
+        }
+        return Promise.resolve();
     }
 
     Update(delta: Ticker): void {

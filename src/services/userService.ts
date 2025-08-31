@@ -61,3 +61,13 @@ export const getCurrentUser = async (): Promise<User> => {
 export const logoutUser = () => {
   return account.deleteSession('current');
 };
+
+export const deleteUser = async (): Promise<void> => {
+  // const res =  account.delete()
+
+  try {
+    console.info('Usuario borrado con éxito')
+  } catch (error) {
+    console.error('Error deleting user:', error);
+  }
+}

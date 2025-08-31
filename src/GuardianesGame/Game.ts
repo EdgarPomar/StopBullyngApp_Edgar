@@ -1,22 +1,26 @@
 // Aquí irá la lógica y la estructura del juego
 import * as PIXI from 'pixi.js';
 import {SceneManager} from './SceneManager';
-import {Ticker} from 'pixi.js';
+import {Assets, Ticker} from 'pixi.js';
 
 export abstract class Game {
     public scene: SceneManager;
     private app: PIXI.Application;
-
-    //prepare the relative coordinate values of the Client Resolution
+     //prepare the relative coordinate values of the Client Resolution
     protected preferredX: number = 800;
     protected preferredY: number = 600;
 
     abstract Update(delta: Ticker): void;
 
+
     constructor() {
         this.app = new PIXI.Application();
         this.scene = new SceneManager(this.app);
     }
+
+    UpdateCallback = (delta: Ticker) => {
+        this.Update(delta);
+    };
 
     Initialize = async (x: number, y: number) => {
         this.preferredX = x;
@@ -24,10 +28,7 @@ export abstract class Game {
 
         await this.InitGPU(this.preferredX, this.preferredY);
 
-        this.app.ticker.add((delta) => {
-            this.Update(delta);
-        });
-
+        this.app.ticker.add(this.UpdateCallback);
         await this.LoadContentAsync();
     }
 
@@ -56,7 +57,25 @@ export abstract class Game {
             console.log(error);
         }
     };
+    private DestroyGPU = async ()=>{
+        if(this.app != null) {
+            this.app.stage.destroy({
+                children: true,
+                texture: true,
+                textureSource: true, // En Pixi v8 en lugar de baseTexture
+            });
+        }
+        Assets.reset();
+    }
+    Dispose(){
+        this.app.ticker.remove(this.UpdateCallback);
+        this.app.ticker.stop();
+        this.UnloadContentAsync();
+        this.DestroyGPU();
+        this.app.destroy(true, { children: true, texture: true, textureSource: true });
 
+    }
     abstract LoadContentAsync(): Promise<void>;
+    abstract UnloadContentAsync(): Promise<void>;
 
 }

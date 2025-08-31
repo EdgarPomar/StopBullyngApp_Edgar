@@ -36,7 +36,8 @@ const GameViewport: React.FC = () => {
 
     observer.observe(div);    
     guardian.Initialize(div.offsetWidth, div.offsetHeight);
-    
+//    guardian.Dispose();
+
     // Inicializar con las dimensiones actuales
     actualizarResolucion();
     

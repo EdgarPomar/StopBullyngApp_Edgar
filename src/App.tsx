@@ -9,37 +9,70 @@ import Dashboard from './pages/Dashboard';
 import { useAuth } from './hooks/useAuth';
 import GameViewport from './pages/GameViewport';
 import styles from './styles/Apptsx.module.css';
+import {logoutUser} from "./services/userService.ts";
 
+const App: React.FC = () =>
+{
 
-
-const App: React.FC = () => {
   const { user } = useAuth();
 
-  return (
-    <Router>
-      <AppBar />
-      <main className={styles.appMain}>
-        <Routes>
-          <Route path="/" element={<Landing />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/Game" element={<GameViewport />} />
-          <Route
-            path="/dashboard"
-            element={
-              user?.labels?.includes('admin') ? (
-                <Dashboard />
-              ) : (
-                <Navigate to="/login" replace />
-              )
-            }
-          />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </main>
-      <Footer />
-    </Router>
-  );
+  const LogoutAsync = async () => {
+    logoutUser();
+  }
+
+  if(!user)
+  {
+      LogoutAsync();
+      return (
+          <Router>
+              <AppBar />
+              <main className={styles.appMain}>
+                  <Routes>
+                      <Route path="/" element={<Landing />} />
+                      <Route path="/login" element={<Login />} />
+                      <Route path="*" element={<Navigate to="/" />} />
+                  </Routes>
+              </main>
+              <Footer />
+          </Router>
+      );
+  }
+  else
+  {
+      return (
+        <Router>
+          <AppBar />
+          <main className={styles.appMain}>
+            <Routes>
+              <Route path="/" element={<Landing />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route
+                  path="/Game"
+                  element={
+                      !user ? (<Navigate to="/login" replace />
+                      ) : (
+                          <GameViewport />
+                      )
+                  }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  user?.labels?.includes('admin') ? (
+                    <Dashboard />
+                  ) : (
+                    <Navigate to="/login" replace />
+                  )
+                }
+              />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </main>
+          <Footer />
+        </Router>
+      );
+  }
 };
 
 

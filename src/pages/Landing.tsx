@@ -7,7 +7,7 @@ const Landing: React.FC = () => {
   const navigate = useNavigate();
 
   const handleStart = () => {
-    navigate('/login');
+    navigate('/game');
   };
 
   return (

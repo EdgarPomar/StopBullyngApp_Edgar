@@ -1,4 +1,16 @@
-import { Application, Container, Sprite, Texture, Text, TextStyle, Graphics, HTMLText, AnimatedSprite, AnimatedSpriteOptions } from "pixi.js";
+import {
+    Application,
+    Container,
+    Sprite,
+    Texture,
+    Text,
+    TextStyle,
+    Graphics,
+    HTMLText,
+    AnimatedSprite,
+    AnimatedSpriteOptions,
+    ContainerChild
+} from "pixi.js";
 import { Rectangle } from "./Rectangle";
 import { Point } from "./types/Point";
 
@@ -10,12 +22,26 @@ export class SceneManager {
         this.app = gameapp;
         this.app.stage.addChild(this.scene);
     }
-
     private centerScene() {
         this.scene.x = this.app.screen.width / 2;
         this.scene.y = this.app.screen.height / 2;
         this.scene.pivot.x = this.scene.width / 2;
         this.scene.pivot.y = this.scene.height / 2;
+    }
+
+    Count(){
+        return this.scene.children.length;
+    }
+    Remove(obj: ContainerChild) {
+        this.scene.removeChild(obj);
+
+        if ('destroy' in obj && typeof obj.destroy === 'function') {
+            obj.destroy({
+                children: true,       // Si tiene hijos, destrúyelos también
+                texture: true,        // Libera la textura
+                textureSource: true,  // Libera la base de la textura (Pixi v8)
+            });
+        }
     }
 
     Add(actorRectangle: Rectangle, texture: Texture) : Sprite {
@@ -159,6 +185,9 @@ export class SceneManager {
 
     GetApp(): Application {
         return this.app;
+    }
+    GetElementByIndex(index: number): ContainerChild {
+        return this.scene.getChildAt(index);
     }
 }
 
