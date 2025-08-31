@@ -19,6 +19,8 @@ export class GuardianesGame extends Game {
     private walkerchar: AnimatedSprite | null = null;
     private sceneIndex:number = 1;
 
+    private player: AudioPlayer | null = null;
+
     private async LoadRoomAsync(idroom :string){
         this.currentScene = await getSceneByNumericId(parseInt(idroom, 10));
         this.currentReflection = await getReflexionesByEscenaPrefix(idroom);
@@ -38,6 +40,7 @@ export class GuardianesGame extends Game {
         const textureBg: Texture = await Assets.load(ContentManager.GetPath(ContentManager.Content.backgrounds, "fondo.png"));
         const textureButton: Texture = await Assets.load(ContentManager.GetPath(ContentManager.Content.ui, "GenericButton.svg"));
         const walker_sheet = await Assets.load(ContentManager.GetPath(ContentManager.Content.characters, 'walker.json'));
+
 
         const audioSong = ContentManager.GetPath(ContentManager.Content.music, 'gcbullyingscene.ogg');
 
@@ -192,14 +195,14 @@ export class GuardianesGame extends Game {
                 console.log();
             }
 
-            const player = new AudioPlayer(audioSong, false, 0.8);
+
 
             /*player.pause();   // Pause
             player.stop();    // Stop and reset*/
-            player.setVolume(0.5); // Set volume to 50%
-            player.setLoop(true);  // Enable looping
-            player.play();    // Start playing
-
+            this.player = new AudioPlayer(audioSong, false, 0.8);
+            this.player.setVolume(0.5); // Set volume to 50%
+            this.player.setLoop(true);  // Enable looping
+            this.player.play();    // Start playing
         } else {
             console.error("No se pudo cargar la escena con id numérico 1");
         }
@@ -209,11 +212,16 @@ export class GuardianesGame extends Game {
         return this.LoadAssets();
     }
     UnloadContentAsync(): Promise<void> {
-        const sceneObjectsCount = this.scene.Count();
-        for (let i=0; i < sceneObjectsCount; ++i){
+        for (let i= this.scene.Count() - 1; i > 1; --i){
             const element = this.scene.GetElementByIndex(i);
             this.scene.Remove(element);
         }
+
+        if(this.player != null) {
+            this.player.stop();
+        }
+        this.player = null;
+
         return Promise.resolve();
     }
 

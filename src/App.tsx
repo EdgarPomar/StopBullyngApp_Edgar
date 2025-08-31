@@ -10,11 +10,13 @@ import { useAuth } from './hooks/useAuth';
 import GameViewport from './pages/GameViewport';
 import styles from './styles/Apptsx.module.css';
 import {logoutUser} from "./services/userService.ts";
+import {GuardianesGame} from "./GuardianesGame/GuardianesGame.ts";
 
 const App: React.FC = () =>
 {
 
   const { user } = useAuth();
+  const guardian: GuardianesGame = new GuardianesGame();
 
   const LogoutAsync = async () => {
     logoutUser();
@@ -41,7 +43,7 @@ const App: React.FC = () =>
   {
       return (
         <Router>
-          <AppBar />
+            <AppBar webglsurface={guardian}></AppBar>
           <main className={styles.appMain}>
             <Routes>
               <Route path="/" element={<Landing />} />
@@ -50,10 +52,7 @@ const App: React.FC = () =>
               <Route
                   path="/Game"
                   element={
-                      !user ? (<Navigate to="/login" replace />
-                      ) : (
-                          <GameViewport />
-                      )
+                    !user ? (<Navigate to="/login" replace />) : (<GameViewport webglsurface={guardian}></GameViewport>)
                   }
               />
               <Route
