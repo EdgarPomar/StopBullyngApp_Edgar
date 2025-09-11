@@ -17,7 +17,11 @@ export class GuardianesGame extends Game {
     private modal: Modal | null = null;
     private walkerchar: AnimatedSprite | null = null;
     private sceneIndex: number = 1;
+
     private player: AudioPlayer | null = null;
+
+
+
 
     // Buffers
     private frontBuffer: Container;
@@ -28,6 +32,10 @@ export class GuardianesGame extends Game {
         this.frontBuffer = new Container();
         this.backBuffer = new Container();
         this.scene.GetApp().stage.addChild(this.frontBuffer);
+
+        const audioSong = ContentManager.GetPath(ContentManager.Content.music, "gcbullyingscene.ogg");
+        this.player = new AudioPlayer(audioSong, false, 0.8);
+
     }
 
     private async BuildRoom(idroom: string): Promise<Container> {
@@ -42,7 +50,7 @@ export class GuardianesGame extends Game {
         const textureBg: Texture = await Assets.load(
             ContentManager.GetPath(ContentManager.Content.backgrounds, "fondo.png")
         );
-        this.scene.Add(new Rectangle(0, 0, this.preferredX, this.preferredY), textureBg, container);
+        this.scene.Add(new Rectangle(0, 0, this.preferredX, this.preferredY), textureBg);
 
         // Modal
         this.modal = new Modal(this.scene.GetApp());
@@ -54,7 +62,7 @@ export class GuardianesGame extends Game {
                 fill: "black",
                 align: "left",
                 wordWrap: false,
-                wordWrapWidth: 0,
+                wordWrapWidth: 15,
             });
 
             // Pregunta
@@ -67,7 +75,6 @@ export class GuardianesGame extends Game {
                 (this.preferredY / 2) - 210,
                 360,
                 60,
-                container
             );
 
             // Botones (los 4 con callbacks)
@@ -94,7 +101,6 @@ export class GuardianesGame extends Game {
                     360,
                     60,
                     textureButton,
-                    container
                 );
 
                 btn.OnClick(btn.GetSprite(), () => {
@@ -120,17 +126,15 @@ export class GuardianesGame extends Game {
                     650 / 2
                 ),
                 walker_animator,
-                container
             );
             this.scene.PlayAnimatedSprite(this.walkerchar);
             this.scene.SetAnimatedSpriteSpeed(this.walkerchar, 0.1);
 
-            // Música
-            const audioSong = ContentManager.GetPath(ContentManager.Content.music, "gcbullyingscene.ogg");
-            this.player = new AudioPlayer(audioSong, false, 0.8);
-            this.player.setVolume(0.5);
-            this.player.setLoop(true);
-            this.player.play();
+
+
+                this.player.setVolume(0.5);
+                this.player.setLoop(true);
+                this.player.play();
         }
 
         return container;
@@ -181,9 +185,10 @@ export class GuardianesGame extends Game {
 
         return Promise.resolve();
     }
+    //mejor hablo escribiendo, más que nada por si se molestan tus padres estando ocupado vot a poner el droidcam
 
     Update(delta: Ticker): void {
-        console.log(delta.deltaTime + "ms, " + delta.FPS + " FPS");
+    //    console.log(delta.deltaTime + "ms, " + delta.FPS + " FPS");
         if (this.walkerchar) {
             this.walkerchar.x += 0.5;
         }

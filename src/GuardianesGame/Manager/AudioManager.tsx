@@ -1,28 +1,31 @@
 export class AudioPlayer {
     private audio: HTMLAudioElement;
-    private isPlaying: boolean;
 
     constructor(src: string, loop: boolean = false, volume: number = 1.0) {
         this.audio = new Audio(src);
         this.audio.loop = loop;
         this.audio.volume = volume;
-        this.isPlaying = false;
     }
 
+    isPlaying() : boolean {
+        return !this.audio.paused && !this.audio.ended && this.audio.readyState > 2;
+    }
+
+
     play(): void {
+        if(this.isPlaying()) {
+            this.stop();
+        }
         this.audio.play();
-        this.isPlaying = true;
     }
 
     pause(): void {
         this.audio.pause();
-        this.isPlaying = false;
     }
 
     stop(): void {
-        this.audio.pause();
+        this.pause();
         this.audio.currentTime = 0;
-        this.isPlaying = false;
     }
 
     setVolume(volume: number): void {
@@ -37,6 +40,6 @@ export class AudioPlayer {
     }
 
     get isPlayingStatus(): boolean {
-        return this.isPlaying;
+        return this.isPlaying();
     }
 }
