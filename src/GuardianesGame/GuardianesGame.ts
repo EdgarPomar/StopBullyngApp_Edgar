@@ -19,10 +19,6 @@ export class GuardianesGame extends Game {
     private sceneIndex: number = 1;
 
     private player: AudioPlayer | null = null;
-
-
-
-
     // Buffers
     private frontBuffer: Container;
     private backBuffer: Container;
@@ -35,7 +31,6 @@ export class GuardianesGame extends Game {
 
         const audioSong = ContentManager.GetPath(ContentManager.Content.music, "gcbullyingscene.ogg");
         this.player = new AudioPlayer(audioSong, false, 0.8);
-
     }
 
     private async BuildRoom(idroom: string): Promise<Container> {
@@ -113,28 +108,30 @@ export class GuardianesGame extends Game {
                 });
             });
 
-            // Personaje animado
-            const walker_sheet = await Assets.load(
-                ContentManager.GetPath(ContentManager.Content.characters, "walker.json")
-            );
-            const walker_animator = walker_sheet.animations["walk"];
-            this.walkerchar = this.scene.AddAnimatedSprite(
-                new Rectangle(
-                    this.preferredX / 2 - 550,
-                    this.preferredY / 2 - 45,
-                    650 / 2,
-                    650 / 2
-                ),
-                walker_animator,
-            );
-            this.scene.PlayAnimatedSprite(this.walkerchar);
-            this.scene.SetAnimatedSpriteSpeed(this.walkerchar, 0.1);
+            // Personaje animado (solo en la primera escena)
+            if (this.sceneIndex === 1) {
+                const walker_sheet = await Assets.load(
+                    ContentManager.GetPath(ContentManager.Content.characters, "walker.json")
+                );
+                const walker_animator = walker_sheet.animations["walk"];
+                this.walkerchar = this.scene.AddAnimatedSprite(
+                    new Rectangle(
+                        this.preferredX / 2 - 550,
+                        this.preferredY / 2 - 45,
+                        650 / 2,
+                        650 / 2
+                    ),
+                    walker_animator,
+                );
+                this.scene.PlayAnimatedSprite(this.walkerchar);
+                this.scene.SetAnimatedSpriteSpeed(this.walkerchar, 0.1);
+            }
 
-
-
+            if (this.player != null) {
                 this.player.setVolume(0.5);
                 this.player.setLoop(true);
                 this.player.play();
+            }
         }
 
         return container;
@@ -160,6 +157,13 @@ export class GuardianesGame extends Game {
             return; // 🔒 detenemos aquí
         }
         this.sceneIndex++;
+
+        // 👇 eliminar walker al salir de la primera escena
+        if (this.walkerchar) {
+            this.walkerchar.destroy();
+            this.walkerchar = null;
+        }
+
         const sceneName = String(this.sceneIndex);
 
         this.BuildRoom(sceneName).then((newContainer) => {
@@ -185,10 +189,9 @@ export class GuardianesGame extends Game {
 
         return Promise.resolve();
     }
-    //mejor hablo escribiendo, más que nada por si se molestan tus padres estando ocupado vot a poner el droidcam
 
     Update(delta: Ticker): void {
-    //    console.log(delta.deltaTime + "ms, " + delta.FPS + " FPS");
+        // console.log(delta.deltaTime + "ms, " + delta.FPS + " FPS");
         if (this.walkerchar) {
             this.walkerchar.x += 0.5;
         }

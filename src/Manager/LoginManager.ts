@@ -17,7 +17,7 @@ export class LoginManager {
                 name: doc.name,
                 email: doc.email,
                 role: doc?.role,
-                hashedPassword: doc?.hashedPassword,
+                hashedpassword: doc?.hashedpassword,
                 labels: Array.isArray(doc.labels) ? doc.labels : [],
             }));
 

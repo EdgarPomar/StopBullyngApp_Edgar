@@ -32,7 +32,8 @@ const App: React.FC = () =>
                   <Routes>
                       <Route path="/" element={<Landing />} />
                       <Route path="/login" element={<Login />} />
-                      <Route path="*" element={<Navigate to="/" />} />
+                      <Route path="/register" element={<Register />} />
+                      <Route path="*" element={<Navigate to="/login" />} />
                   </Routes>
               </main>
               <Footer />
