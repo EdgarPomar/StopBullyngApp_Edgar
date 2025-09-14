@@ -1,10 +1,9 @@
-import { AnimatedSprite, Assets, TextStyle, Texture, Ticker, Container } from "pixi.js";
+import {AnimatedSprite, Assets, TextStyle, Texture, Ticker, Container, HTMLText} from "pixi.js";
 import { Game } from "./Game";
 import { Rectangle } from "./Rectangle";
 import { getSceneByNumericId } from "./services/scenesService";
 import { Scene } from "./types/sceneType";
 import Button from "./components/Button";
-import Label from "./components/Label.ts";
 import { Modal } from "./components/Modal.ts";
 import { ContentManager } from "./Filesystem/Content.ts";
 import { AudioPlayer } from "./Manager/AudioManager.tsx";
@@ -57,20 +56,18 @@ export class GuardianesGame extends Game {
                 fill: "black",
                 align: "left",
                 wordWrap: false,
-                wordWrapWidth: 15,
+                wordWrapWidth: 25,
             });
 
             // Pregunta
-            new Label(
-                this.scene,
-                "title_label",
-                this.currentScene.pregunta,
-                arialFont,
-                (this.preferredX / 2) - 75,
-                (this.preferredY / 2) - 210,
-                360,
-                60,
-            );
+            this.scene.AddLabel(new Rectangle((this.preferredX / 2) - 75, (this.preferredY / 2) - 210, 600, 60), new HTMLText({
+                    text: `${this.currentScene.pregunta}`,
+                    style: arialFont,
+                    anchor: 0.5,
+                    resolution: 2,
+
+                }
+            ));
 
             // Botones (los 4 con callbacks)
             const textureButton: Texture = await Assets.load(
@@ -191,7 +188,7 @@ export class GuardianesGame extends Game {
     }
 
     Update(delta: Ticker): void {
-        // console.log(delta.deltaTime + "ms, " + delta.FPS + " FPS");
+        console.log(delta.deltaTime + "ms, " + delta.FPS + " FPS");
         if (this.walkerchar) {
             this.walkerchar.x += 0.5;
         }
