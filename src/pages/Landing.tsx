@@ -1,14 +1,44 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Landing.module.css';
 import typography from '../styles/Typography.module.css';
 
 const Landing: React.FC = () => {
     const navigate = useNavigate();
+    const [visibleCards, setVisibleCards] = useState<number[]>([]); // tarjetas visibles
+    const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
     const handleStart = () => {
         navigate('/game');
     };
+
+    const mechanics = [
+        { icon: "🎭", title: "Escoge tu respuesta", desc: "Se te mostrarán situaciones de la vida real relacionadas con el bullying." },
+        { icon: "💡", title: "Toma decisiones", desc: "Selecciona la opción que creas más adecuada para resolver el conflicto." },
+        { icon: "🧠", title: "Reflexiona", desc: "Después de cada elección, descubrirás el impacto de tus acciones." },
+        { icon: "🏆", title: "Aprende y gana", desc: "Mejora tu puntuación mientras te conviertes en un Guardián de la Convivencia." }
+    ];
+
+    // Intersection Observer para animación al hacer scroll
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    const index = Number(entry.target.getAttribute('data-index'));
+                    if (entry.isIntersecting && !visibleCards.includes(index)) {
+                        setVisibleCards((prev) => [...prev, index]);
+                    }
+                });
+            },
+            { threshold: 0.2 } // activa cuando el 20% de la tarjeta es visible
+        );
+
+        cardsRef.current.forEach((card) => {
+            if (card) observer.observe(card);
+        });
+
+        return () => observer.disconnect();
+    }, [visibleCards]);
 
     return (
         <>
@@ -21,29 +51,30 @@ const Landing: React.FC = () => {
             </div>
 
             {/* Sección: Mecánicas */}
-            <section className={`${styles.section} ${styles.fadeInUp}`}>
+            <section className={`${styles.section}`}>
                 <h2 className={typography.subtitle}>⚡ ¿Cómo se juega?</h2>
                 <div className={styles.mechanicsGrid}>
-                    <div className={styles.card}>
-                        <span className={styles.icon}>🎭</span>
-                        <h3>Escoge tu respuesta</h3>
-                        <p>Se te mostrarán situaciones de la vida real relacionadas con el bullying.</p>
-                    </div>
-                    <div className={styles.card}>
-                        <span className={styles.icon}>💡</span>
-                        <h3>Toma decisiones</h3>
-                        <p>Selecciona la opción que creas más adecuada para resolver el conflicto.</p>
-                    </div>
-                    <div className={styles.card}>
-                        <span className={styles.icon}>🧠</span>
-                        <h3>Reflexiona</h3>
-                        <p>Después de cada elección, descubrirás el impacto de tus acciones.</p>
-                    </div>
-                    <div className={styles.card}>
-                        <span className={styles.icon}>🏆</span>
-                        <h3>Aprende y gana</h3>
-                        <p>Mejora tu puntuación mientras te conviertes en un Guardián de la Convivencia.</p>
-                    </div>
+                    {mechanics.map((item, index) => (
+                        <div
+                            key={index}
+                            ref={(el: HTMLDivElement | null) => {
+                                cardsRef.current[index] = el; // asignación sin retorno
+                            }}
+                            data-index={index}
+                            className={`${styles.card} ${
+                                visibleCards.includes(index)
+                                    ? index % 2 === 0
+                                        ? styles.slideRight
+                                        : styles.slideLeft
+                                    : ''
+                            }`}
+                            style={{ animationDelay: `${index * 0.3}s` }}
+                        >
+                            <span className={styles.icon}>{item.icon}</span>
+                            <h3>{item.title}</h3>
+                            <p>{item.desc}</p>
+                        </div>
+                    ))}
                 </div>
             </section>
 

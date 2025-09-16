@@ -31,7 +31,7 @@
   margin: 60px 0;
 }
 
-/* Nuevas secciones */
+/* Secciones */
 .section,
 .sectionAlt {
   max-width: 900px;
@@ -48,7 +48,7 @@
 }
 
 .sectionAlt {
-  background: #f0f4ff; /* Un tono suave para alternar */
+  background: #f0f4ff;
 }
 
 /* Subtítulos */
@@ -71,7 +71,7 @@
 /* ================= Mecánicas en formato grid ================= */
 .mechanicsGrid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 1.5rem;
   margin-top: 1.5rem;
 }
@@ -120,6 +120,16 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
 .fadeIn {
   opacity: 0;
   animation: fadeIn 1s ease forwards;
@@ -128,6 +138,16 @@
 .fadeInUp {
   opacity: 0;
   animation: fadeInUp 1s ease forwards;
+}
+
+.slideRight {
+  opacity: 0;
+  animation: slideInRight 0.8s ease forwards;
+}
+
+.slideLeft {
+  opacity: 0;
+  animation: slideInLeft 0.8s ease forwards;
 }
 
 /* ================= Responsividad ================= */
@@ -150,7 +170,7 @@
   }
 
   .mechanicsGrid {
-    grid-template-columns: 1fr; /* una sola columna en tablet/móvil */
+    grid-template-columns: 1fr;
   }
 }
 
