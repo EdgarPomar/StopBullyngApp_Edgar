@@ -1,0 +1,8 @@
+//Incluir el codigo de la rutina generarHashSha512 en la clase userService. 
+//iniciar sesion register bot 
+//crear cuenta con email y password (account NO) 
+//El campo password que mandas a la base de datos debe llamar a la rutina generarHashSHA512(password) 
+// remplaza la password del objeto de registro por el continuo. 
+// ejemplo: password=generarHashSHA512(password) 
+//cerrar sesion register bot
+
